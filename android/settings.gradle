@@ -1,0 +1,3 @@
+rootProject.name = 'Counter10000'
+
+include ':app'
