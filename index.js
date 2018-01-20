@@ -5,27 +5,22 @@ import {Router, Scene} from 'react-native-router-flux';
 
 import ScreenAmountPlayer from './app/screens/ScreenAmountPlayer';
 import ScreenEnterPlayerNames from './app/screens/ScreenEnterPlayerNames'; 
-
-import { createStore } from 'redux';
-import countApp from './reducer/Reducer';
-
+import countApp from './reducer/Reducer'
+import {applyMiddleware, createStore } from 'redux';
+import { Provider, connect } from 'react-redux'
 import ADD_AMOUNT_PLAYER from './app/screens/ScreenAmountPlayer';
+import logger from 'redux-logger'
 
-let store = createStore(countApp)
-
-console.log('Current State: ' + store.getState())
-
-const unsubscribe = store.subscribe(() =>
-  console.log("Store State in Subscribe: " + store.getState())
+// Logger with default options
+const store = createStore(
+    countApp,
+  applyMiddleware(logger)
 )
-
-store.dispatch(ADD_AMOUNT_PLAYER(5))
-
-unsubscribe()
 
 export default class Index extends Component {
   render() {
     return (
+ <Provider store={store}>
     <Router>
         <Scene key='root'>
 
@@ -44,6 +39,7 @@ export default class Index extends Component {
 
         </Scene>
     </Router>
+    </Provider>
     );
   }
 }

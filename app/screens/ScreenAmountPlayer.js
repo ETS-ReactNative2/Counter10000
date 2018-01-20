@@ -3,7 +3,8 @@ import {AppRegistry, Platform,  StyleSheet, Text, View, Button} from 'react-nati
 import {StackNavigator,} from 'react-navigation';
 import {Actions} from 'react-native-router-flux';
 import Amount from '../components/AmountPlayerScreen/Amount';
-
+import { connect } from 'react-redux'
+import {ADD_AMOUNT_PLAYER} from '../../reducer/Reducer'
 
 import ScreenEnterPlayerNames from './ScreenEnterPlayerNames';
 
@@ -17,7 +18,7 @@ export function addAmountPlayer(number) {
 }
 
 
-export default class ScreenAmountPlayer extends Component {
+  class ScreenAmountPlayer extends Component {
 
   constructor(props) {
     super(props);
@@ -35,6 +36,7 @@ export default class ScreenAmountPlayer extends Component {
   render() {
 //onPress={() => this.onPressAmountPlayer(number[0])}
   // Amount
+  const{dispatch} = this.props;
     const numbers= ["2","3","4","5","6","7","8"];
     const btnAmount = numbers.map((number) =>
       <View
@@ -42,7 +44,7 @@ export default class ScreenAmountPlayer extends Component {
         key ={number.toString()}>
         <Button
           title={number[0]}
-          onPress={() => Actions.names({am: number[0]})}
+          onPress={() => { dispatch({type:ADD_AMOUNT_PLAYER,  amount: number[0] });Actions.names({})}}
         />
       </View>
     );
@@ -88,4 +90,12 @@ const styles = StyleSheet.create({
 
 })
 
-AppRegistry.registerComponent('ScreenAmountPlayer', () => ScreenAmountPlayer);
+function mapStateToProps(state) {
+
+  return {
+	}
+}
+
+
+
+export default connect()(ScreenAmountPlayer)

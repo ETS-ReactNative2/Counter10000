@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {AppRegistry, Platform,  StyleSheet, Text, View, TextInput, Button, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import { connect } from 'react-redux'
 
 import Amount from '../components/AmountPlayerScreen/Amount';
 
 
-export default class ScreenEnterPlayerNames extends Component {
+ class ScreenEnterPlayerNames extends Component {
 
   constructor(props) {
     super(props);
@@ -19,9 +20,9 @@ export default class ScreenEnterPlayerNames extends Component {
   render() {
 
     console.log(this.props.navigation.state.params.am);
-
+    const {playerAmount} = this.props;
     var textBoxes = [];
-    for(var i=0; i<this.props.navigation.state.params.am; i++) {
+    for(var i=0; i<playerAmount; i++) {
       var placeholderText = 'Player ' + (i+1);
       textBoxes.push(
           <TextInput
@@ -90,4 +91,13 @@ const styles = StyleSheet.create({
 
 })
 
-AppRegistry.registerComponent('ScreenEnterPlayerNames', () => ScreenEnterPlayerNames);
+function mapStateToProps(state) {
+
+  return {
+    playerAmount:state.number
+	}
+}
+
+
+
+export default connect(mapStateToProps)(ScreenEnterPlayerNames)
