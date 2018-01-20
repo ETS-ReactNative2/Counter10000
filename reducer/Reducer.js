@@ -1,5 +1,6 @@
-import {ADD_AMOUNT_PLAYER} from '../app/screens/ScreenAmountPlayer';
 import combineReducers from 'redux'; 
+
+export const ADD_AMOUNT_PLAYER = "ADD_AMOUNT_PLAYER"
 
 const initialState = {
   number:0

@@ -7,7 +7,7 @@ import Amount from '../components/AmountPlayerScreen/Amount';
 
 import ScreenEnterPlayerNames from './ScreenEnterPlayerNames';
 
-export const ADD_AMOUNT_PLAYER = "ADD_AMOUNT_PLAYER"
+
 
 export function addAmountPlayer(number) {
   return {
