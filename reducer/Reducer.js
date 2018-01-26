@@ -58,8 +58,7 @@ export default function countApp(state = initialState, action) {
           [action.id]:
           {
             ...state.player[action.id],
-            //points: parseInt(state.player[action.id].points,10) - parseInt(action.points,10),
-            points: (parseInt(state.player[action.id].points,10) <= 0) ? 0 : parseInt(action.points,10)
+            points: parseInt(state.player[action.id].points,10) - parseInt(action.points,10),
           },
         }
       }

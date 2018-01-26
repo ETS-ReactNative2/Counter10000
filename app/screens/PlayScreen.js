@@ -29,12 +29,28 @@ class PlayScreen extends Component {
     }
 
     onPressPlus() {
+        console.log("Current state " + this.state.points);
+        this.setStatePoints(0);
+        console.log("New state " + this.state.points);
         this.props.dispatch({ type: ADD_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
+        this._textInput.setNativeProps({ text: '' });
     }
 
     onPressMinus() {
         const { players, playerAmount } = this.props;
-        this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
+        if(players[this.state.currentPlayerNumber].points > 0) {
+            this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
+        }
+        this._textInput.setNativeProps({ text: '' });
+        console.log("Current state " + this.state.points);
+        this.setStatePoints(0);
+        console.log("New state " + this.state.points);
+
+    }
+
+    setStatePoints(newState) {
+        this.setState({ points: newState}, function() {
+        });
     }
 
     render() {
