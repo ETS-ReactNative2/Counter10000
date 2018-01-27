@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform, StyleSheet, 
-Text, View, TextInput, Button, ScrollView, Keyboard, FlatList } from 'react-native';
+import {
+  AppRegistry, Platform, StyleSheet,
+  Text, View, TextInput, Button, ScrollView, Keyboard, FlatList, SectionList,
+  Dimensions,
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { List, ListItem } from "react-native-elements";
 
 import Amount from '../components/AmountPlayerScreen/Amount';
-import { ADD_PLAYER_NAME } from '../../reducer/Reducer'
+import { ADD_PLAYER_NAME, SET_PLACE } from '../../reducer/Reducer'
 import PropTypes from 'prop-types';
-
-
 
 class SceenOverview extends Component {
 
@@ -22,53 +23,62 @@ class SceenOverview extends Component {
   };
 
 
-
   render() {
     const { players, playerAmount } = this.props;
+    const playersArray = [];
     const sortedPlayers = [];
 
 
     // Save all players in array doesn't matter if they have points or not 
     for (var i = 0; i < playerAmount; i++) {
       sortedPlayers.push(players[i]);
-      console.log("Add to Array: " + players[i]);
     }
-    /*
-    // Sort 
+
     for (var i = 0; i < playerAmount; i++) {
-      for (var j = playerAmount - 2; j <= i; j--) {
-        if (sortedPlayers[j].points > sortedPlayers[j + 1].points) {
-          var tmp = sortedPlayers[j];
-          sortedPlayers[j] = sortedPlayers[j + 1];
-          sortedPlayers[j + 1] = tmp;
+      // Look for Max 
+      var max = i;
+      for (var j = i; j < playerAmount; j++) {
+        if (sortedPlayers[j].points > sortedPlayers[max].points) {
+          max = j;
         }
+        var tmp = sortedPlayers[i];
+        sortedPlayers[i] = sortedPlayers[max];
+        sortedPlayers[max] = tmp;
+
       }
     }
-*/
-    var textBoxes = [];
 
     for (var i = 0; i < playerAmount; i++) {
-      const key = i + 1;
-      console.log("Pushed into Players Array: " + sortedPlayers[i].playerName);
-      textBoxes.push(
-        <Text
-          key={key}
-        >{key + '.' + sortedPlayers[i].playerName + '\n'}
-        </Text>
-
-
-      );
+      sortedPlayers[i].numberOfBest = i + 1;
     }
 
-    return (
-      <FlatList
-        data={sortedPlayers}
-        renderItem={({ item }) => <Text>{item.playerName}</Text>}
-      />
 
+    return (
+      <View style={styles.view}>
+        <FlatList
+          data={sortedPlayers}
+          renderItem={({ item }) => (
+            <Text style={styles.text}> {item.numberOfBest + ". " +
+              item.playerName + ":\t" + item.points} </Text>
+          )}
+        />
+      </View>
     );
+
+
   }
 }
+
+const styles = StyleSheet.create({
+  view: {
+    paddingTop: 30,
+  },
+  text: {
+    flex: 1,
+    fontSize: 30,
+  },
+})
+
 
 // Maps the state to the local props. Therefore I can access it in these functions for example
 function mapStateToProps(state) {

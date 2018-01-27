@@ -5,13 +5,13 @@ export const ADD_PLAYER_NAME = "ADD_PLAYER_NAME"
 export const ADD_POINTS = "ADD_POINTS"
 export const SUB_POINTS = "SUB_POINTS"
 export const SET_POINTS = "SET_POINTS"
-export const CALC_PLACE = "CALC_PLACE"
+export const SET_PLACE = "SET_PLACE"
 
 
 const initialState = {
 
   number: 0,
-  player: { 1: { playerName: '', playerNumber: 0, points: 0 } },
+  player: { 1: { playerName: '', playerNumber: 0, points: 0, numberOfBest: 0 } },
   playerIDs: []
 }
 // Get player players.1.playername ...
@@ -33,6 +33,7 @@ export default function countApp(state = initialState, action) {
               playerName: action.playerName,
               playerNumber: action.playerNumber,
               points: 0,
+              numberOfBest: 0,
             }
         },
         playerIDs: state.playerIDs.includes(action.playerNumber) ? state.playerIDs : state.playerIDs.concat(action.playerNumber)
@@ -64,6 +65,21 @@ export default function countApp(state = initialState, action) {
           },
         }
       }
+    }
+    case SET_PLACE: {
+      return {
+        ...state,
+        player: {
+
+          ...state.player,
+          [action.id]:
+          {
+            ...state.player[action.id],
+            numberOfBest: action.numberOfBest,
+          },
+        }
+      }
+
     }
     default:
       return state
