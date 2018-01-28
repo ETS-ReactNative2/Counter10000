@@ -68,11 +68,6 @@ class SceenOverview extends Component {
                 rightTitle={String(item.points)}
                 rightTitleStyle={{ fontSize: 20, }}
                 titleStyle={{ fontSize: 20, }}
-                
-              /*
-             <Text style={styles.text}> {item.numberOfBest + ". " +
-               item.playerName + ":\t" + item.points} </Text>
-               */
               />
             )}
           />
@@ -94,7 +89,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
 })
-
 
 // Maps the state to the local props. Therefore I can access it in these functions for example
 function mapStateToProps(state) {

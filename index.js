@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, StyleSheet } from 'react-native';
+import { AppRegistry, StyleSheet } from 'react-native';
 import App from './App';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 

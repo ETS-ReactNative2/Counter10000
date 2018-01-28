@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform, StyleSheet, 
-    Text, View, TextInput, Button, TouchableOpacity, 
-    Image, Keyboard, Alert } from 'react-native';
+import {
+    AppRegistry, Platform, StyleSheet,
+    Text, View, TextInput, Button, TouchableOpacity,
+    Image, Keyboard, Alert
+} from 'react-native';
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Reducer'
@@ -12,7 +14,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         // Current Player Number is ID of player
-        this.state = { currentPlayerNumber: 0, points: 0 }
+        this.state = { currentPlayerNumber: 0, points: 0, undoPoints: 0 }
     }
 
     onPressNext() {
@@ -31,6 +33,7 @@ class PlayScreen extends Component {
     }
 
     onPressPlus() {
+        console.log("Hit button plus")
         console.log("Current state " + this.state.points);
         this.setStatePoints(0);
         console.log("New state " + this.state.points);
@@ -40,35 +43,39 @@ class PlayScreen extends Component {
     }
 
     onPressMinus() {
+        console.log("Hit button minus")
         const { players, playerAmount } = this.props;
-        if(players[this.state.currentPlayerNumber].points > 0) {
+        if (players[this.state.currentPlayerNumber].points > 0) {
             this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
         }
         this._textInput.setNativeProps({ text: '' });
         console.log("Current state " + this.state.points);
         this.setStatePoints(0);
         console.log("New state " + this.state.points);
-
     }
 
     setStatePoints(newState) {
-        this.setState({ points: newState}, function() {
+        this.setState({ points: newState }, function () {
         });
     }
 
     checkIf10k(newpoints) {
         const { players, playerAmount } = this.props;
-        if(players[this.state.currentPlayerNumber].points + newpoints >= 10000) {
-          /*  Alert.alert(
-                "WON",
-                [
-                  {text: 'OK', onPress: () => console.log('Ask me later pressed')},
+        if (players[this.state.currentPlayerNumber].points + newpoints >= 10000) {
 
+            // Works on both iOS and Android
+            Alert.alert(
+                'Won!',
+                players[this.state.currentPlayerNumber].playerName + ' won the Game',
+                [
+                    { text: 'Last step undone!', onPress: () => this.props.dispatch({ type: SUB_POINTS, points: this.state.undoPoints, id: this.state.currentPlayerNumber + 1 }) },
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
                 ],
                 { cancelable: false }
-              )*/
+            )
+
         }
-        
+
     }
 
     render() {
@@ -105,7 +112,7 @@ class PlayScreen extends Component {
                             placeholder='Points'
                             placeholderTextColor="grey"
                             keyboardType='numeric'
-                            onChangeText={(text) => this.setState({ points: text })}
+                            onChangeText={(text) => this.setState({ points: text, undoPoints: text })}
                         />
                     </View>
 
