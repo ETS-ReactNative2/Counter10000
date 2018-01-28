@@ -55,13 +55,28 @@ class SceenOverview extends Component {
 
     return (
       <View style={styles.view}>
-        <FlatList
-          data={sortedPlayers}
-          renderItem={({ item }) => (
-            <Text style={styles.text}> {item.numberOfBest + ". " +
-              item.playerName + ":\t" + item.points} </Text>
-          )}
-        />
+        <List>
+          <FlatList
+            data={sortedPlayers}
+            renderItem={({ item }) => (
+              <ListItem
+                hideChevron
+                avatar= {require('../../img/avatar/1.png')}
+                roundAvatar
+                title={item.numberOfBest + ". " +
+                  item.playerName}
+                rightTitle={String(item.points)}
+                rightTitleStyle={{ fontSize: 20, }}
+                titleStyle={{ fontSize: 20, }}
+                
+              /*
+             <Text style={styles.text}> {item.numberOfBest + ". " +
+               item.playerName + ":\t" + item.points} </Text>
+               */
+              />
+            )}
+          />
+        </List>
       </View>
     );
 
@@ -72,6 +87,7 @@ class SceenOverview extends Component {
 const styles = StyleSheet.create({
   view: {
     paddingTop: 30,
+    padding: 10,
   },
   text: {
     flex: 1,

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { AppRegistry, Platform, StyleSheet, 
+    Text, View, TextInput, Button, TouchableOpacity, 
+    Image, Keyboard, Alert } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Reducer'
@@ -34,6 +36,7 @@ class PlayScreen extends Component {
         console.log("New state " + this.state.points);
         this.props.dispatch({ type: ADD_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
         this._textInput.setNativeProps({ text: '' });
+        this.checkIf10k(this.state.points);
     }
 
     onPressMinus() {
@@ -51,6 +54,21 @@ class PlayScreen extends Component {
     setStatePoints(newState) {
         this.setState({ points: newState}, function() {
         });
+    }
+
+    checkIf10k(newpoints) {
+        const { players, playerAmount } = this.props;
+        if(players[this.state.currentPlayerNumber].points + newpoints >= 10000) {
+          /*  Alert.alert(
+                "WON",
+                [
+                  {text: 'OK', onPress: () => console.log('Ask me later pressed')},
+
+                ],
+                { cancelable: false }
+              )*/
+        }
+        
     }
 
     render() {
