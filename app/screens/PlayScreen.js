@@ -4,9 +4,11 @@ import {
     Text, View, TextInput, Button, TouchableOpacity,
     Image, Keyboard, Alert
 } from 'react-native';
-import { Icon } from 'react-native-elements'
-import { connect } from 'react-redux'
-import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Reducer'
+import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+
+import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Reducer';
 
 
 class PlayScreen extends Component {
@@ -69,13 +71,18 @@ class PlayScreen extends Component {
                 players[this.state.currentPlayerNumber].playerName + ' won the Game',
                 [
                     { text: 'Last step undone!', onPress: () => this.props.dispatch({ type: SUB_POINTS, points: this.state.undoPoints, id: this.state.currentPlayerNumber + 1 }) },
-                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                    { text: 'OK', onPress: () => this.btnWonGameOK()},
                 ],
                 { cancelable: false }
             )
 
         }
 
+    }
+
+    btnWonGameOK() {
+        console.log("Hit Button OK");
+        Actions.Overview({});
     }
 
     render() {
