@@ -10,7 +10,8 @@ import PlayScreen from './app/screens/PlayScreen';
 import ScreenOverview from './app/screens/ScreenOverview'
 import TabsPlayScreen from './app/components/TabsPlayScreen'
 
-import countApp from './reducer/Reducer'
+//import countApp from './reducer/Reducer'
+import countMainReducer from './reducer/Reducer'
 import { applyMiddleware, createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
 import ADD_AMOUNT_PLAYER from './app/screens/ScreenAmountPlayer';
@@ -18,7 +19,7 @@ import logger from 'redux-logger'
 
 // Logger with default options
 const store = createStore(
-    countApp,
+    countMainReducer,
     applyMiddleware(logger)
 )
 

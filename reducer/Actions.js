@@ -1,0 +1,6 @@
+export const ADD_AMOUNT_PLAYER = "ADD_AMOUNT_PLAYER"
+export const ADD_PLAYER_NAME = "ADD_PLAYER_NAME"
+export const ADD_POINTS = "ADD_POINTS"
+export const SUB_POINTS = "SUB_POINTS"
+export const SET_POINTS = "SET_POINTS"
+export const SET_PLACE = "SET_PLACE"

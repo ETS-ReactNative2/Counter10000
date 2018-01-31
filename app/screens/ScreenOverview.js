@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { List, ListItem } from "react-native-elements";
 
 import Amount from '../components/AmountPlayerScreen/Amount';
-import { ADD_PLAYER_NAME, SET_PLACE } from '../../reducer/Reducer'
+import { ADD_PLAYER_NAME, SET_PLACE } from '../../reducer/Actions'
 import PropTypes from 'prop-types';
 
 class SceenOverview extends Component {

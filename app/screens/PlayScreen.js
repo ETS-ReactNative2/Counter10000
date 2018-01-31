@@ -8,7 +8,7 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Reducer';
+import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Actions';
 
 
 class PlayScreen extends Component {

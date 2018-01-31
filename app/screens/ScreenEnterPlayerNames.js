@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux'
 
 import Amount from '../components/AmountPlayerScreen/Amount';
-import { ADD_PLAYER_NAME } from '../../reducer/Reducer'
+import { ADD_PLAYER_NAME } from '../../reducer/Actions'
 import PropTypes from 'prop-types';
 
 
@@ -129,7 +129,7 @@ function mapStateToProps(state) {
 
   return {
     playerAmount: state.number,
-    players: state.playerIDs.map(id => state.player[id]) || []
+    //players: state.playerIDs.map(id => state.player[id]) || []
   }
 }
 

@@ -4,11 +4,11 @@ import { StackNavigator, } from 'react-navigation';
 import { Actions } from 'react-native-router-flux';
 import Amount from '../components/AmountPlayerScreen/Amount';
 import { connect } from 'react-redux'
-import { ADD_AMOUNT_PLAYER } from '../../reducer/Reducer'
+
+// Import Actions
+import { ADD_AMOUNT_PLAYER } from '../../reducer/Actions'
 
 import ScreenEnterPlayerNames from './ScreenEnterPlayerNames';
-
-
 
 export function addAmountPlayer(number) {
   return {
