@@ -112,8 +112,6 @@ function pointOperations(state, action) {
 
 }
 
-
-
 export default function countApp(state = initialState, action) {
   switch (action.type) {
     case ADD_AMOUNT_PLAYER:
@@ -127,6 +125,9 @@ export default function countApp(state = initialState, action) {
     }
     case SUB_POINTS: {
       return (pointOperations(state, action))
+    }
+    case SET_POINTS: {
+      return(pointOperations(state, action))
     }
     case SET_PLACE: {
       return (playerOperations(state, action))
