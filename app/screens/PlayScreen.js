@@ -48,12 +48,20 @@ class PlayScreen extends Component {
         console.log("Hit button minus")
         const { players, playerAmount } = this.props;
         if (players[this.state.currentPlayerNumber].points > 0) {
-            this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
+            console.log("Current points more than 0")
+            if ((players[this.state.currentPlayerNumber].points - this.state.points) < 0) {
+                console.log("Current points minus new points is less than 0")
+                // This action sets the points on 0
+                this.props.dispatch({ type: SET_POINTS, points: 0, id: this.state.currentPlayerNumber + 1 })
+            } else {
+
+                this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
+            }
         }
         this._textInput.setNativeProps({ text: '' });
         console.log("Current state " + this.state.points);
-        this.setStatePoints(0);
-        console.log("New state " + this.state.points);
+        //this.setStatePoints(0);
+        //console.log("New state " + this.state.points);
     }
 
     setStatePoints(newState) {
@@ -71,7 +79,7 @@ class PlayScreen extends Component {
                 players[this.state.currentPlayerNumber].playerName + ' won the Game',
                 [
                     { text: 'Last step undone!', onPress: () => this.props.dispatch({ type: SUB_POINTS, points: this.state.undoPoints, id: this.state.currentPlayerNumber + 1 }) },
-                    { text: 'OK', onPress: () => this.btnWonGameOK()},
+                    { text: 'OK', onPress: () => this.btnWonGameOK() },
                 ],
                 { cancelable: false }
             )
