@@ -83,7 +83,7 @@ function pointOperations(state, action) {
             {
               ...state.player[action.id],
               points: parseInt(state.player[action.id].points, 10) + parseInt(action.points, 10),
-              pointRecord: [...state.player[action.id].pointRecord, 1 * action.points],
+              pointRecord: [...state.player[action.id].pointRecord, "+" + action.points],
             },
         }
       }
@@ -97,7 +97,7 @@ function pointOperations(state, action) {
             {
               ...state.player[action.id],
               points: parseInt(state.player[action.id].points, 10) - parseInt(action.points, 10),
-              pointRecord:  [...state.player[action.id].pointRecord, -1 * action.points],
+              pointRecord:  [...state.player[action.id].pointRecord, "-" + action.points],
             },
         }
       }

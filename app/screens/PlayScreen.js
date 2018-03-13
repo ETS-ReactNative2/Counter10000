@@ -4,16 +4,15 @@ import {
     Text, View, TextInput, Button, TouchableOpacity,
     Image, Keyboard, Alert, ScrollView, FlatList
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon, ListItem, List } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { material, human } from 'react-native-typography'
 
 import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Actions';
 
 
 class PlayScreen extends Component {
-
-
 
     constructor(props) {
         super(props);
@@ -39,12 +38,10 @@ class PlayScreen extends Component {
     onPressPlus() {
         console.log("Hit button plus")
         console.log("Current state " + this.state.points);
-        //this.setStatePoints(0);
-        //console.log("New state " + this.state.points);
         this.props.dispatch({ type: ADD_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
         this._textInput.setNativeProps({ text: '' });
         this.checkIf10k(this.state.points);
-
+        this.refs.flatlist.scrollToEnd({ animated: true });
     }
 
     onPressMinus() {
@@ -60,9 +57,11 @@ class PlayScreen extends Component {
 
                 this.props.dispatch({ type: SUB_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
             }
+
         }
         this._textInput.setNativeProps({ text: '' });
         console.log("Current state " + this.state.points);
+        this.refs.flatlist.scrollToEnd({ animated: true });
     }
 
     setStatePoints(newState) {
@@ -96,26 +95,29 @@ class PlayScreen extends Component {
     render() {
         const { players, playerAmount } = this.props;
         const pointRecord = players[this.state.currentPlayerNumber].pointRecord;
-        //this.refs.flatlist.scrollToEnd({animated: true });
-
-
+        //
         return (
             <View style={styles.viewMain} >
                 <View style={styles.viewName}>
-                    <Text style={styles.txtName}> {players[this.state.currentPlayerNumber].playerName} </Text>
+                    <Text style={[material.display1, styles.txtName]}> {players[this.state.currentPlayerNumber].playerName} </Text>
                 </View>
 
                 <View style={styles.viewPointOverview}>
-                    <Text > Point overview: </Text>
+                    <Text style={[material.headline, styles.txtPointRecordHL]}> Point Record: </Text>
+
                     <FlatList
                         ref='flatlist'
                         data={pointRecord}
-                        renderItem={({ item }) => <Text>{item}</Text>}
+                        renderItem={({ item }) =>
+                            <Text style={[material.body1, styles.txtPointRecord]}>{item}</Text>
+                        }
+                        ItemSeparatorComponent={this.renderSeparator}
                     />
+
                 </View>
 
                 <View style={styles.viewPoints}>
-                    <Text style={styles.txtPoints}> Points: {players[this.state.currentPlayerNumber].points}</Text>
+                    <Text style={[material.title, styles.txtPoints]}> Points: {players[this.state.currentPlayerNumber].points}</Text>
                 </View>
 
                 <View style={styles.viewInput}>
@@ -212,26 +214,22 @@ const styles = StyleSheet.create({
         //backgroundColor: 'blue',
         //justifyContent: 'space-between',
     },
+    viewButton: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+    },
     txtPoints: {
-        textAlign: 'center',
-        fontSize: 30,
-        padding: 10,
-        fontWeight: 'bold',
+        paddingLeft: 10,
     },
     txtPointsDynamic: {
         textAlign: 'center',
         fontSize: 30,
         padding: 10,
     },
-    viewButton: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-    },
     txtName: {
+        paddingBottom: 5,
         textAlign: 'center',
-        fontSize: 30,
-
     },
     addButton: {
         height: 70,
@@ -239,7 +237,22 @@ const styles = StyleSheet.create({
     },
     txtinputPoints: {
         fontSize: 25,
-    }
+    },
+    txtPointRecord: {
+        textAlign: 'left',
+        //fontSize: 20,
+        paddingLeft: 10,
+        padding: 1,
+        //fontWeight: 'bold',
+    },
+    txtPointRecordHL: {
+        textAlign: 'left',
+        //fontSize: 30,
+        paddingTop: 30,
+        padding: 10,
+        //fontWeight: 'bold',
+    },
+
 
 
 })
