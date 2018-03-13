@@ -11,7 +11,14 @@ import { SET_PLACE } from './Actions';
 const initialState = {
 
   number: 0,
-  player: { 1: { playerName: '', playerNumber: 0, points: 0, numberOfBest: 0 } },
+  player: { 1: 
+    { 
+      playerName: '', 
+      playerNumber: 0, 
+      points: 0, 
+      numberOfBest: 0,
+      pointRecord: [], 
+    } },
   playerIDs: []
 }
 
@@ -41,6 +48,7 @@ function playerOperations(state, action) {
               playerNumber: action.playerNumber,
               points: 0,
               numberOfBest: 0,
+              pointRecord: [],
             }
         },
         playerIDs: state.playerIDs.includes(action.playerNumber) ? state.playerIDs : state.playerIDs.concat(action.playerNumber)
@@ -75,6 +83,7 @@ function pointOperations(state, action) {
             {
               ...state.player[action.id],
               points: parseInt(state.player[action.id].points, 10) + parseInt(action.points, 10),
+              pointRecord: [...state.player[action.id].pointRecord, 1 * action.points],
             },
         }
       }
@@ -88,6 +97,7 @@ function pointOperations(state, action) {
             {
               ...state.player[action.id],
               points: parseInt(state.player[action.id].points, 10) - parseInt(action.points, 10),
+              pointRecord:  [...state.player[action.id].pointRecord, -1 * action.points],
             },
         }
       }

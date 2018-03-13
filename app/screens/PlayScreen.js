@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     AppRegistry, Platform, StyleSheet,
     Text, View, TextInput, Button, TouchableOpacity,
-    Image, Keyboard, Alert
+    Image, Keyboard, Alert, ScrollView, FlatList
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -12,6 +12,8 @@ import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Actions';
 
 
 class PlayScreen extends Component {
+
+
 
     constructor(props) {
         super(props);
@@ -37,11 +39,12 @@ class PlayScreen extends Component {
     onPressPlus() {
         console.log("Hit button plus")
         console.log("Current state " + this.state.points);
-        this.setStatePoints(0);
-        console.log("New state " + this.state.points);
+        //this.setStatePoints(0);
+        //console.log("New state " + this.state.points);
         this.props.dispatch({ type: ADD_POINTS, points: this.state.points, id: this.state.currentPlayerNumber + 1 })
         this._textInput.setNativeProps({ text: '' });
         this.checkIf10k(this.state.points);
+
     }
 
     onPressMinus() {
@@ -60,8 +63,6 @@ class PlayScreen extends Component {
         }
         this._textInput.setNativeProps({ text: '' });
         console.log("Current state " + this.state.points);
-        //this.setStatePoints(0);
-        //console.log("New state " + this.state.points);
     }
 
     setStatePoints(newState) {
@@ -71,8 +72,7 @@ class PlayScreen extends Component {
 
     checkIf10k(newpoints) {
         const { players, playerAmount } = this.props;
-        if (players[this.state.currentPlayerNumber].points + newpoints >= 10000) {
-
+        if (parseInt(players[this.state.currentPlayerNumber].points, 10) + parseInt(newpoints, 10) >= 10000) {
             // Works on both iOS and Android
             Alert.alert(
                 'Won!',
@@ -95,16 +95,27 @@ class PlayScreen extends Component {
 
     render() {
         const { players, playerAmount } = this.props;
+        const pointRecord = players[this.state.currentPlayerNumber].pointRecord;
+        //this.refs.flatlist.scrollToEnd({animated: true });
+
+
         return (
-            <View style={styles.viewMain}>
+            <View style={styles.viewMain} >
                 <View style={styles.viewName}>
                     <Text style={styles.txtName}> {players[this.state.currentPlayerNumber].playerName} </Text>
                 </View>
 
+                <View style={styles.viewPointOverview}>
+                    <Text > Point overview: </Text>
+                    <FlatList
+                        ref='flatlist'
+                        data={pointRecord}
+                        renderItem={({ item }) => <Text>{item}</Text>}
+                    />
+                </View>
 
                 <View style={styles.viewPoints}>
-                    <Text style={styles.txtPoints}> Points: </Text>
-                    <Text style={styles.txtPointsDynamic}> {players[this.state.currentPlayerNumber].points} </Text>
+                    <Text style={styles.txtPoints}> Points: {players[this.state.currentPlayerNumber].points}</Text>
                 </View>
 
                 <View style={styles.viewInput}>
@@ -192,7 +203,12 @@ const styles = StyleSheet.create({
         //backgroundColor: 'green',
     },
     viewPoints: {
-        flex: 2,
+        flex: 1,
+        //backgroundColor: 'blue',
+        //justifyContent: 'space-between',
+    },
+    viewPointOverview: {
+        flex: 7,
         //backgroundColor: 'blue',
         //justifyContent: 'space-between',
     },
