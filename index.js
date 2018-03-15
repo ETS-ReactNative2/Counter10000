@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet } from 'react-native';
+import { AppRegistry, StyleSheet, View, Text, Button } from 'react-native';
 import App from './App';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 
@@ -16,6 +16,9 @@ import { applyMiddleware, createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
 import ADD_AMOUNT_PLAYER from './app/screens/ScreenAmountPlayer';
 import logger from 'redux-logger'
+
+// React Navigation
+import { StackNavigator } from 'react-navigation';
 
 // Logger with default options
 const store = createStore(
@@ -68,7 +71,7 @@ const Scenes = Actions.create(
     </Router>
 )
 
-export default class Index extends Component {
+class Index extends Component {
     render() {
         console.disableYellowBox = true;
         return (
@@ -79,11 +82,66 @@ export default class Index extends Component {
     }
 }
 
+
+
+
+
+
 const styles = StyleSheet.create({
     tabBar: {
         backgroundColor: '#de1d3e'
     },
 })
 
-// skip this line if using Create React Native App
+export default Index;
 AppRegistry.registerComponent('Counter10000', () => Index);
+
+
+// Test React Navigator
+
+
+
+// Test not finished
+/*
+class HomeScreen extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Home Screen TEST</Text>
+                <Button
+                    title="Go to Details"
+                    onPress={() => this.props.navigation.navigate('Details')}
+                />
+            </View>
+        );
+    }
+}
+
+class DetailsScreen extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>DetailsScreen</Text>
+            </View>
+        );
+    }
+}
+
+const Counter10000 = StackNavigator({
+    Home: {
+        screen: HomeScreen,
+    },
+    Details: {
+        screen: DetailsScreen,
+    },
+});
+
+
+
+// For testing on
+export default StackNavigator;
+
+//Just Testing
+AppRegistry.registerComponent('Counter10000', () => Counter10000);
+
+*/
