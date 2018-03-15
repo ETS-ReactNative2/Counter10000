@@ -4,6 +4,7 @@ import { StackNavigator, } from 'react-navigation';
 import { Actions } from 'react-native-router-flux';
 import Amount from '../components/AmountPlayerScreen/Amount';
 import { connect } from 'react-redux'
+import { material, human } from 'react-native-typography'
 
 // Import Actions
 import { ADD_AMOUNT_PLAYER } from '../../reducer/Actions'
@@ -53,7 +54,7 @@ class ScreenAmountPlayer extends Component {
     return (
       <View style={styles.viewMain}>
         <View style={styles.viewTxt}>
-          <Text style={styles.TxtHeading}> How many players? </Text>
+          <Text style={[material.headline, styles.TxtHeading]}> How many players? </Text>
         </View>
         <View style={styles.viewAmount}>
           {btnAmount}
@@ -77,9 +78,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   TxtHeading: {
-    fontSize: 20,
+    //fontSize: 20,
     textAlign: 'center',
-    fontStyle: 'italic',
+    padding: 10,
+    //fontStyle: 'italic',
   },
   button: {
     padding: 10,

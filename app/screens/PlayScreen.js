@@ -92,6 +92,19 @@ class PlayScreen extends Component {
         Actions.Overview({});
     }
 
+    renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: "35%",
+              backgroundColor: "#CED0CE",
+              marginLeft: "0%"
+            }}
+          />
+        );
+      };
+
     render() {
         const { players, playerAmount } = this.props;
         const pointRecord = players[this.state.currentPlayerNumber].pointRecord;
@@ -240,8 +253,8 @@ const styles = StyleSheet.create({
     },
     txtPointRecord: {
         textAlign: 'left',
-        //fontSize: 20,
-        paddingLeft: 10,
+        fontSize: 15,
+        paddingLeft: 85,
         padding: 1,
         //fontWeight: 'bold',
     },

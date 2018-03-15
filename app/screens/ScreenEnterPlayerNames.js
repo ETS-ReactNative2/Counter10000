@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { AppRegistry, Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux'
-
 import Amount from '../components/AmountPlayerScreen/Amount';
 import { ADD_PLAYER_NAME } from '../../reducer/Actions'
 import PropTypes from 'prop-types';
-
+import { material, human } from 'react-native-typography'
 
 export function addPlayerName(playerNumber, playerName) {
   return {
@@ -67,7 +66,7 @@ class ScreenEnterPlayerNames extends Component {
     return (
       <View style={styles.viewMain}>
         <View style={styles.viewTxt}>
-          <Text style={styles.TxtHeading}>
+          <Text style={[material.headline ,styles.TxtHeading]}>
             Please enter the names in sequence.
           </Text>
         </View>
@@ -101,7 +100,8 @@ const styles = StyleSheet.create({
   TxtHeading: {
     fontSize: 20,
     textAlign: 'center',
-    fontStyle: 'italic',
+    padding: 10,
+    //fontStyle: 'italic',
   },
   viewTextBox: {
     flex: 5,
