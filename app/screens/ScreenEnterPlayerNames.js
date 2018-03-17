@@ -129,7 +129,7 @@ function mapStateToProps(state) {
 
   return {
     playerAmount: state.number,
-    //players: state.playerIDs.map(id => state.player[id]) || []
+    players: state.playerIDs.map(id => state.player[id]) || []
   }
 }
 
