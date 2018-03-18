@@ -18,6 +18,11 @@ import { Provider, connect } from 'react-redux';
 import ADD_AMOUNT_PLAYER from './app/screens/ScreenAmountPlayer';
 import logger from 'redux-logger'
 
+
+// Restart
+import RNRestart from 'react-native-restart';
+
+
 // React Navigation
 import { StackNavigator } from 'react-navigation';
 
@@ -66,23 +71,21 @@ const Scenes = Actions.create(
                 hideNavBar
                 tabs={true}
             >
+                <Scene key='PlayWrapper' icon={TabIcon} iconName={'play-circle-o'} hideNavBar tabBarLabel='Play!'>
+                    <Scene
+                        key='Play!'
+                        component={PlayScreen}
+                        hideNavBar
+                    />
+                </Scene>
 
-                <Scene
-                    key='Play!'
-                    component={PlayScreen}
-                    icon={TabIcon}
-                    iconName={'play-circle-o'}
-                    hideNavBar
-                />
-
-                <Scene
-                    key='Overview'
-                    iconName={'list-ul'}
-                    icon={TabIcon}
-                    component={ScreenOverview}
-                    hideNavBar
-                />
-
+                <Scene key='OverviewWrapper' iconName={'list-ul'} icon={TabIcon} hideNavBar tabBarLabel='Overview'>
+                    <Scene
+                        key='Overview'
+                        component={ScreenOverview}
+                        hideNavBar
+                    />
+                </Scene>
             </Scene>
 
         </Scene>
@@ -91,7 +94,7 @@ const Scenes = Actions.create(
 
 class Index extends Component {
     render() {
-        console.disableYellowBox = false;
+        console.disableYellowBox = true;
         return (
             <Provider store={store}>
                 <ConnectedRouter scenes={Scenes} />

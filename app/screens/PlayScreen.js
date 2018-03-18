@@ -11,6 +11,9 @@ import { material, human } from 'react-native-typography'
 
 import { ADD_POINTS, SUB_POINTS, SET_POINTS } from '../../reducer/Actions';
 
+import RNRestart from 'react-native-restart';
+
+
 
 class PlayScreen extends Component {
 
@@ -89,7 +92,7 @@ class PlayScreen extends Component {
 
     btnWonGameOK() {
         console.log("Hit Button OK");
-        Actions.Overview({});
+        Actions.Overview({btnVisible: true});
     }
 
     renderSeparator = () => {
@@ -108,7 +111,7 @@ class PlayScreen extends Component {
     render() {
         const { players, playerAmount } = this.props;
         const pointRecord = players[this.state.currentPlayerNumber].pointRecord;
-        //
+
         return (
             <View style={styles.viewMain} >
                 <View style={styles.viewName}>

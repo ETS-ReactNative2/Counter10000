@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { AppRegistry, Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import Amount from '../components/AmountPlayerScreen/Amount';
-import { ADD_PLAYER_NAME } from '../../reducer/Actions'
+import { ADD_PLAYER_NAME } from '../../reducer/Actions';
 import PropTypes from 'prop-types';
-import { material, human } from 'react-native-typography'
+import { material, human } from 'react-native-typography';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 export function addPlayerName(playerNumber, playerName) {
   return {
@@ -19,66 +20,114 @@ class ScreenEnterPlayerNames extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {amountOfPlayer: this.props.playerAmount}
+    this.state = {
+      amountOfPlayer: this.props.playerAmount,
+      errors: [{}]
+
+    }
   }
 
   static navigationOptions = {
     title: 'Player Names',
   };
 
+  componentDidMount() {
+    this.setState({ errors: [] })
+  }
+
   onPressStartTheGame() {
     console.log("Pushed button Start the Game!")
-    const {players, playerAmount} = this.props;
-    console.log(players)
-    Keyboard.dismiss()
-    Actions.playScreen({})
+    const { players, playerAmount } = this.props;
+    this.setState({ errors: [] })
+    var validationOK = this.validateForms();
+    if (validationOK) {
+      Keyboard.dismiss()
+      Actions.playScreen({})
+    }
+  }
 
+  validateForms() {
+    var arr = [];
+
+    const { players, playerAmount } = this.props;
+    for (var i = 0; i < playerAmount; i++) {
+      console.log('i ist: ' + i);
+
+      if (!players[i]) {
+        console.log('Player is empty')
+        arr.push(i)
+      }
+    }
+    this.setState({ errors: arr })
+    console.log('Arr' + arr)
+
+    if (arr.length > 0) {
+      console.log('State > 0 ')
+    } else {
+      Keyboard.dismiss()
+      Actions.playScreen({})
+    }
+  }
+
+  onChangeEnterNames(text, key) {
+    console.log('in function onchangeenternames');
+    console.log('text is:' + text);
+    console.log('key is: ' + key);
+    this.props.dispatch({ type: ADD_PLAYER_NAME, playerNumber: key + 1, playerName: text })
+    this.setState({ playerName: text })
   }
 
 
+
   render() {
+    console.log(this.state.errors)
     const { playerAmount } = this.props;
     var textBoxes = [];
     for (var i = 0; i < this.state.amountOfPlayer; i++) {
       var placeholderText = 'Player ' + (i + 1);
-      const key = i + 1;
+      // Key is same like playerIDs 
+      const key = i;
       textBoxes.push(
-        <TextInput
-          key={key}
-          onChangeText={(text) => { this.props.dispatch({ type: ADD_PLAYER_NAME, playerNumber: key, playerName: text }) }}
-          placeholder={placeholderText}
-          placeholderTextColor="grey"
-          autoCapitalize='words'
-        >
-        </TextInput>
-
+        <View key={'View' + key}>
+          <FormLabel key={'formLabel' + key}>{placeholderText}</FormLabel>
+          <FormInput
+            key={key}
+            onChangeText={(text) => this.onChangeEnterNames(text, key)}
+            placeholderTextColor="grey"
+            autoCapitalize='words'
+            onBlur={() => this.setState({ playerName: '' })}
+          >
+          </FormInput>
+          {this.state.errors.includes(key) &&
+            <FormValidationMessage key={'FormValidationMessage' + key}>
+              Player name is requirred!
+            </FormValidationMessage>
+          }
+        </View>
       );
     }
+    //            onChangeText={(text) => { this.props.dispatch({ type: ADD_PLAYER_NAME, playerNumber: key + 1, playerName: text }) }}
 
     const btnStartGame =
-      <View>
-        <Button
-          title="Start the Game!"
-          onPress={() => this.onPressStartTheGame()}
-        />
-      </View>
+      <Button
+        title='Start the Game!'
+        onPress={this.validateForms.bind(this)}
+      />
 
     return (
       <View style={styles.viewMain}>
         <View style={styles.viewTxt}>
-          <Text style={[material.headline ,styles.TxtHeading]}>
+          <Text style={[material.headline, styles.TxtHeading]}>
             Please enter the names in sequence.
           </Text>
+
         </View>
         <ScrollView style={styles.viewTextBox}>
           {textBoxes}
         </ScrollView>
 
         <View style={styles.viewButton}>
-          <Button
-            title='Start the Game!'
-            onPress={this.onPressStartTheGame.bind(this)}
-          />
+          {btnStartGame}
         </View>
       </View>
     );
@@ -92,31 +141,23 @@ const styles = StyleSheet.create({
     flex: 7,
   },
   viewTxt: {
-    //flex:0.5,
     height: 50,
-    //backgroundColor: 'red',
     justifyContent: 'center',
   },
   TxtHeading: {
     fontSize: 20,
     textAlign: 'center',
     padding: 10,
-    //fontStyle: 'italic',
   },
   viewTextBox: {
     flex: 5,
-    backgroundColor: 'grey',
   },
   viewButton: {
-    //flex: 0.5,
-    //backgroundColor: 'blue',
+
     height: 100,
     justifyContent: 'center',
   },
-  viewTextBox: {
-    flexDirection: 'column',
-    flex: 5
-  },
+
 
 })
 

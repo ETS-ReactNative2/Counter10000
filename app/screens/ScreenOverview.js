@@ -12,22 +12,30 @@ import Amount from '../components/AmountPlayerScreen/Amount';
 import { ADD_PLAYER_NAME, SET_PLACE } from '../../reducer/Actions'
 import PropTypes from 'prop-types';
 
+// Restart
+import RNRestart from 'react-native-restart';
+
 class SceenOverview extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { btnVisible: false }
   }
 
   static navigationOptions = {
     title: 'Overview',
   };
 
+  restartApp() {
+    // Immediately reload the React Native Bundle
+    RNRestart.Restart();
+  }
+
 
   render() {
     const { players, playerAmount } = this.props;
     const playersArray = [];
     const sortedPlayers = [];
-
 
     // Save all players in array doesn't matter if they have points or not 
     for (var i = 0; i < playerAmount; i++) {
@@ -52,29 +60,47 @@ class SceenOverview extends Component {
       sortedPlayers[i].numberOfBest = i + 1;
     }
 
+    const flatListComp =
+      <List>
+        <FlatList
+          data={sortedPlayers}
+          renderItem={({ item }) => (
+            <ListItem
+              hideChevron
+              avatar={require('../../img/avatar/1.png')}
+              roundAvatar
+              title={item.numberOfBest + ". " +
+                item.playerName}
+              rightTitle={String(item.points)}
+              rightTitleStyle={{ fontSize: 20, }}
+              titleStyle={{ fontSize: 20, }}
+            />
+          )}
+        />
+      </List>
 
-    return (
-      <View style={styles.view}>
-        <List>
-          <FlatList
-            data={sortedPlayers}
-            renderItem={({ item }) => (
-              <ListItem
-                hideChevron
-                avatar= {require('../../img/avatar/1.png')}
-                roundAvatar
-                title={item.numberOfBest + ". " +
-                  item.playerName}
-                rightTitle={String(item.points)}
-                rightTitleStyle={{ fontSize: 20, }}
-                titleStyle={{ fontSize: 20, }}
-              />
-            )}
-          />
-        </List>
-      </View>
-    );
+    const btnComp =
+      <Button
+        title='Neues Spiel'
+        onPress={() => RNRestart.Restart()}
+      />
 
+    if (this.props.btnVisible == true) {
+      console.log('BTN Visible is true');
+      return (
+        <View style={styles.view}>
+          {flatListComp}
+          {btnComp}
+        </View>
+      );
+    } else {
+      console.log('BTN Visible is false');
+      return (
+        <View style={styles.view}>
+          {flatListComp}
+        </View>
+      );
+    }
 
   }
 }
@@ -95,7 +121,7 @@ function mapStateToProps(state) {
 
   return {
     playerAmount: state.number,
-    players: state.playerIDs.map(id => state.player[id]) || []
+    players: state.playerIDs.map(id => state.player[id]) || [],
   }
 }
 
