@@ -8,13 +8,6 @@ import PropTypes from 'prop-types';
 import { material, human } from 'react-native-typography';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
-export function addPlayerName(playerNumber, playerName) {
-  return {
-    type: ADD_PLAYER_NAME,
-    playerNumber,
-    playerName,
-  }
-}
 
 class ScreenEnterPlayerNames extends Component {
 
