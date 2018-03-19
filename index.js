@@ -18,6 +18,10 @@ import { Provider, connect } from 'react-redux';
 import ADD_AMOUNT_PLAYER from './app/screens/ScreenAmountPlayer';
 import logger from 'redux-logger'
 
+// Slider
+import SliderAmountPlayer from './app/components/SliderAmountPlayer'
+import ButtonEnterNames from'./app/components/ButtonEnterNames'
+
 
 // Restart
 import RNRestart from 'react-native-restart';
@@ -54,6 +58,7 @@ const Scenes = Actions.create(
 
             <Scene
                 key='amount'
+                // component={ButtonEnterNames}
                 component={ScreenAmountPlayer}
                 title='AmountOfPlayer'
                 initial

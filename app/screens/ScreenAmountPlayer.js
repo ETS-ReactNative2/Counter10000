@@ -11,6 +11,12 @@ import { ADD_AMOUNT_PLAYER } from '../../reducer/Actions'
 
 import ScreenEnterPlayerNames from './ScreenEnterPlayerNames';
 
+// Slider
+import SliderAmountPlayer from '../components/SliderAmountPlayer'
+
+// Button
+import ButtonEnterNames from '../components/ButtonEnterNames'
+
 export function addAmountPlayer(number) {
   return {
     type: ADD_AMOUNT_PLAYER,
@@ -23,6 +29,9 @@ class ScreenAmountPlayer extends Component {
   // Standard Constructor
   constructor(props) {
     super(props);
+    this.state = {
+      value: 2,
+    }
   }
 
   // Flux Navigator Title
@@ -30,8 +39,9 @@ class ScreenAmountPlayer extends Component {
     title: 'Welcome',
   };
 
-
-
+  onValueChangeSlider() {
+    console.log(this.state.value);
+  }
   render() {
     // Get dispatch from props
     const { dispatch } = this.props;
@@ -46,18 +56,24 @@ class ScreenAmountPlayer extends Component {
         />
       </View>
     );
-    //onPress= {store.dispatch("INCREMENT")}
-    // onPress={() => this.props.navigation.navigate('ScreenEnterPlayerNames', {am: number[0]})}
-
 
 
     return (
       <View style={styles.viewMain}>
         <View style={styles.viewTxt}>
-          <Text style={[material.headline, styles.TxtHeading]}> How many players? </Text>
+          <Text style={[material.headline, styles.TxtHeading]}> How many players are playing today? </Text>
         </View>
-        <View style={styles.viewAmount}>
-          {btnAmount}
+        <View>
+          <SliderAmountPlayer
+            value={this.state.value}
+            onValueChange={(value) => this.setState({ value })}
+          />
+        </View>
+        <View style={{ paddingTop: 50 }}>
+          <ButtonEnterNames
+            title={'Enter the names of the player!'}
+            onPress={() => { dispatch({ type: ADD_AMOUNT_PLAYER, amount: this.state.value }); Actions.names({}) }}
+          />
         </View>
       </View>
     );
@@ -66,27 +82,12 @@ class ScreenAmountPlayer extends Component {
 const styles = StyleSheet.create({
   viewMain: {
     flexDirection: 'column',
-    flex: 7,
+    justifyContent: 'center',
+    flex: 1,
   },
   viewTxt: {
-    //flex:0.5,
-    height: 50,
+    paddingBottom: 30,
   },
-  viewAmount: {
-    flex: 5,
-    //backgroundColor: 'grey',
-    justifyContent: 'space-between',
-  },
-  TxtHeading: {
-    //fontSize: 20,
-    textAlign: 'center',
-    padding: 10,
-    //fontStyle: 'italic',
-  },
-  button: {
-    padding: 10,
-  }
-
 })
 
 function mapStateToProps(state) {

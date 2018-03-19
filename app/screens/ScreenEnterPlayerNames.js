@@ -20,42 +20,18 @@ class ScreenEnterPlayerNames extends Component {
     }
   }
 
-  static navigationOptions = {
-    title: 'Player Names',
-  };
-
-  componentDidMount() {
-    this.setState({ errors: [] })
-  }
-
-  onPressStartTheGame() {
-    console.log("Pushed button Start the Game!")
-    const { players, playerAmount } = this.props;
-    this.setState({ errors: [] })
-    var validationOK = this.validateForms();
-    if (validationOK) {
-      Keyboard.dismiss()
-      Actions.playScreen({})
-    }
-  }
-
   validateForms() {
     var arr = [];
 
     const { players, playerAmount } = this.props;
     for (var i = 0; i < playerAmount; i++) {
-      console.log('i ist: ' + i);
-
       if (!players[i]) {
-        console.log('Player is empty')
         arr.push(i)
       }
     }
     this.setState({ errors: arr })
-    console.log('Arr' + arr)
 
     if (arr.length > 0) {
-      console.log('State > 0 ')
     } else {
       Keyboard.dismiss()
       Actions.playScreen({})
@@ -70,10 +46,7 @@ class ScreenEnterPlayerNames extends Component {
     this.setState({ playerName: text })
   }
 
-
-
   render() {
-    console.log(this.state.errors)
     const { playerAmount } = this.props;
     var textBoxes = [];
     for (var i = 0; i < this.state.amountOfPlayer; i++) {
@@ -99,7 +72,6 @@ class ScreenEnterPlayerNames extends Component {
         </View>
       );
     }
-    //            onChangeText={(text) => { this.props.dispatch({ type: ADD_PLAYER_NAME, playerNumber: key + 1, playerName: text }) }}
 
     const btnStartGame =
       <Button
