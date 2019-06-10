@@ -1,4 +1,5 @@
-# Counter 10.000
+# 10.000 Assistance
 
-Mobile application assistant for the dice game 10.000. Just a small demo app to get familiar with react-native. 
+10.000 assistance is a react-native application (just tested for Android currently). It assist with the dice game 10.000 with keeping track of the player's counts
 
+First React-Native project to get a bit of experience with react :-) 
