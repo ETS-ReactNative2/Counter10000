@@ -1,4 +1,4 @@
-# Counter10000
-Demo react-native application. Counter for dice game 10.000
+# Counter 10.000
 
-First React-Native project to get a bit of experience with react :-) 
+Mobile application assistant for the dice game 10.000. Just a small demo app to get familiar with react-native. 
+

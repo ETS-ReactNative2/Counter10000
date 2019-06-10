@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   viewTxt: {
     paddingBottom: 30,
+    marginLeft: 10,
   },
 })
 

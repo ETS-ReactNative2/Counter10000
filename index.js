@@ -33,7 +33,7 @@ import { StackNavigator } from 'react-navigation';
 // Logger with default options
 const store = createStore(
     countMainReducer,
-    applyMiddleware(logger)
+    // applyMiddleware(logger)
 )
 
 const ConnectedRouter = connect()(Router);

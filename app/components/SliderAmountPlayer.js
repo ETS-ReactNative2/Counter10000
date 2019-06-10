@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Slider } from 'react-native-elements';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 
 
 export default class SliderAmountPlayer extends Component {
@@ -11,21 +11,21 @@ export default class SliderAmountPlayer extends Component {
         }
     }
 
-    
+
 
     render() {
 
         return (
 
-            <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center', marginLeft: 10, marginRight: 10 }}>
                 <Slider
                     value={this.props.value}
-                    onValueChange={this.props.onValueChange} 
+                    onValueChange={this.props.onValueChange}
                     minimumValue={2}
                     maximumValue={8}
                     step={1}
-                    
-                    />
+
+                />
                 <Text>Value: {this.props.value}</Text>
             </View>
 
