@@ -4,4 +4,4 @@
 
 First React-Native project to get a bit of experience with react :-) 
 
-![](preview.gif)
+<img src="preview.gif" width="250">
